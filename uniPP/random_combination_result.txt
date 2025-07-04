@@ -1,0 +1,19 @@
+Randomly selected options:
+l1: not_leq(1, X1, Y1, Z1, x1, y1, z1)
+l2: leq(2, x1, y1, z1, X2, Y2, Z2)
+l3: leq(3, X3, Y3, Z3, x1, y1, z1)
+l4: leq(2, x1, y1, z1, X4, Y4, Z4)
+l5: leq(1, x1, y1, z1, X5, Y5, Z5)
+l6: leq(3, X6, Y6, Z6, x1, y1, z1)
+l7: leq(3, X7, Y7, Z7, x1, y1, z1)
+l8: leq(1, X8, Y8, Z8, x1, y1, z1)
+l9: leq(2, X9, Y9, Z9, x1, y1, z1)
+
+rules:
+not_leq(1, X1, Y1, Z1, x, y, z) -> leq(2, x, y, z, X2, Y2, Z2), leq(3, X3, Y3, Z3, x, y, z).
+leq(2, x, y, z, X4, Y4, Z4) -> leq(1, x, y, z, X5, Y5, Z5), leq(3, X6, Y6, Z6, x, y, z).
+leq(3, X7, Y7, Z7, x, y, z) -> leq(1, X8, Y8, Z8, x, y, z), leq(2, X9, Y9, Z9, x, y, z).
+
+Step1 result: PNE exists
+
+Step2 result: No unique PNE payoff
