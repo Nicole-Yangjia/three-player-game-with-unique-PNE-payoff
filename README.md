@@ -10,17 +10,13 @@ Follow these steps sequentially to reproduce the full analysis:
 1. **Generate Combinations**  
    ```bash
    python generate.py
-2.**Check for Pure Nash Equilibrium (PNE) existence**
-   ```bash
+2.Check for Pure Nash Equilibrium (PNE) existence
    python havePNE.py
-3.**Complete symmetric payoff generation (adds x2/y2/z2 strategies)**
-   ```bash
+3.Complete symmetric payoff generation (adds x2/y2/z2 strategies)
    python sy_generate.py
-4.**Verify unique PNE payoffs**
-   ```bash
+4.Verify unique PNE payoffs
    python uni_payoff.py
-5.**Generate human-readable results**
-   ```bash
+5.Generate human-readable results
    python final_output.py
 
 ##Testing Specific Conditions
