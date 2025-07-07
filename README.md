@@ -14,33 +14,38 @@ This repository contains code for generating and analyzing three-player game mat
 
 The script executes these steps sequentially:  
 
-1. **Generate Combinations**
-   
-   Creates all possible rule combinations and saves to generate_combination.csv
-   
-2. **Check for Pure Nash Equilibrium (PNE) existence**
-   
-  Filters rules that admit at least one Pure Nash Equilibrium
 
-  Outputs: havePNE.csv (satisfiable) and noPNE.csv (unsatisfiable)
-  
-3. **Complete symmetric payoff generation (adds x2/y2/z2 strategies)**
+1. **Generate Rule Combinations**
    
-   Generates symmetric payoff rules (adds x2/y2/z2 strategies)
-   
-   Output: sy_generate_combination.csv
-   
-4. **Verify unique PNE payoffs**
-   
-   Identifies rules with unique PNE in symmetric games
-   
-   Outputs: unique_PNE_payoff.csv (unique) and no_unique_PNE_payoff.csv (non-unique)
-   
-5. **Generate human-readable results**
-   
-   Processes rules into interpretable condition formats
-   
-   Output: conditions_unique_PNE_payoff.csv
+   - *Action*: Creates all possible rule combinations from predefined option sets
+     
+   - *Input*: None (generates from internal definitions)
+     
+   - *Output*: `generate_combination.csv` (all rule combinations)
+
+3. **Check PNE Existence**  
+   - *Action*: Filters rules that admit at least one Pure Nash Equilibrium  
+   - *Input*: `generate_combination.csv`  
+   - *Outputs*:  
+     - `havePNE.csv` (rules with ≥1 PNE)  
+     - `noPNE.csv` (rules with no PNE)
+
+4. **Create Symmetric Rules**  
+   - *Action*: Generates symmetric payoff rules (adds x2/y2/z2 strategies)  
+   - *Input*: `havePNE.csv`  
+   - *Output*: `sy_generate_combination.csv` (symmetric rules)
+
+5. **Verify Unique PNE Payoffs**  
+   - *Action*: Identifies rules with unique PNE in symmetric games  
+   - *Input*: `sy_generate_combination.csv`  
+   - *Outputs*:  
+     - `unique_PNE_payoff.csv` (rules with exactly one PNE)  
+     - `no_unique_PNE_payoff.csv` (rules with multiple/non-unique PNE)
+
+6. **Extract Human-Readable Conditions**  
+   - *Action*: Processes rules into interpretable condition formats  
+   - *Input*: `unique_PNE_payoff.csv`  
+   - *Output*: `conditions_unique_PNE_payoff.csv` (final human-readable conditions)
    
 ## Testing Specific Conditions
 To check if a random combination satisfies unique PNE payoff conditions:
