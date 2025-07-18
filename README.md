@@ -1,6 +1,5 @@
-# three-player-game-with-unique-PNE-payoff
-# Code Repository: Discovering Theorems in Game Theory  
-**Article Title**: Discovering Theorems in Game Theory: The Nash Equilibrium in a Three-Person Game is Unique  
+# Unique PNE payoffs in 3-player game
+**Article Title**: Beyond Duopoly: Computational Discovery on Unique Pure-Strategy Nash Equilibrium Payoffs in Triopoly 
 
 This repository contains code for generating and analyzing three-player game matrices to verify uniqueness conditions of Nash equilibrium payoffs, as presented in the associated article.
 
