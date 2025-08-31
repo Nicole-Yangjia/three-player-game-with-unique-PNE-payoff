@@ -1,5 +1,7 @@
 # Unique PNE payoffs in 3-player game
 **Article Title**: Discovering three-player games with unique pure Nash equilibrium payoffs
+
+
 This repository contains code for generating and analyzing three-player game matrices to verify uniqueness conditions of Nash equilibrium payoffs, as presented in the associated article.
 
 ## Single-File Execution  
