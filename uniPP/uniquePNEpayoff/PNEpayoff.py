@@ -101,7 +101,7 @@ player(1..3).
 %Sigma G
 leq(I, X, Y, Z, X, Y, Z) :- s1(X), s2(Y), s3(Z), player(I).
 
-leq(I, X1, Y1, Z1, X2, Y2, Z2) | leq(I, X2, Y2, Z2, X1, Y1, Z1) :- 
+:-not leq(I, X1, Y1, Z1, X2, Y2, Z2),not leq(I, X2, Y2, Z2, X1, Y1, Z1),
     s1(X1), s2(Y1), s3(Z1), 
     s1(X2), s2(Y2), s3(Z2), 
     player(I).
@@ -117,7 +117,7 @@ leq(I, X1, Y1, Z1, X3, Y3, Z3) :-
 %classical not and not is failure
 not_leq(I, X, Y, Z, X1, Y1, Z1):- not leq(I, X, Y, Z, X1, Y1, Z1), s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
 :- not_leq(I, X, Y, Z, X1, Y1, Z1), leq(I, X, Y, Z, X1, Y1, Z1), s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
-not_leq(I, X, Y, Z, X1, Y1, Z1) | leq(I, X, Y, Z, X1, Y1, Z1):- s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
+:- not not_leq(I, X, Y, Z, X1, Y1, Z1), not leq(I, X, Y, Z, X1, Y1, Z1):- s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
 
 %Omega'(x1,y1,z1)
 {b_rules}
@@ -236,7 +236,7 @@ player(1..3).
 %Sigma G
 leq(I, X, Y, Z, X, Y, Z) :- s1(X), s2(Y), s3(Z), player(I).
 
-leq(I, X1, Y1, Z1, X2, Y2, Z2) | leq(I, X2, Y2, Z2, X1, Y1, Z1) :- 
+:- not leq(I, X1, Y1, Z1, X2, Y2, Z2), not leq(I, X2, Y2, Z2, X1, Y1, Z1),
     s1(X1), s2(Y1), s3(Z1), 
     s1(X2), s2(Y2), s3(Z2), 
     player(I).
@@ -249,7 +249,7 @@ leq(I, X1, Y1, Z1, X3, Y3, Z3) :-
 %classical not and not is failure
 not_leq(I, X, Y, Z, X1, Y1, Z1):- not leq(I, X, Y, Z, X1, Y1, Z1), s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
 :- not_leq(I, X, Y, Z, X1, Y1, Z1), leq(I, X, Y, Z, X1, Y1, Z1), s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
-not_leq(I, X, Y, Z, X1, Y1, Z1) | leq(I, X, Y, Z, X1, Y1, Z1):- s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
+:- not not_leq(I, X, Y, Z, X1, Y1, Z1), not leq(I, X, Y, Z, X1, Y1, Z1), s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
 
 %Omega'(x1,y1,z1) and Omega'(x2,y2,z2)
 {b_rules}
@@ -447,5 +447,6 @@ if __name__ == "__main__":
     print("Step 5: Extracting conditions")
     print("=" * 50)
     extract_conditions()
+
 
     print("\nProcessing pipeline completed successfully!")
