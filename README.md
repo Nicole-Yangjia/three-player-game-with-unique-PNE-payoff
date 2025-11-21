@@ -10,6 +10,10 @@ This repository contains code for generating and analyzing three-player game mat
    ```bash
    python PNEpayoff.py
    ```
+## If you need to check whether the logic program is stratified, perform the following operations.
+ ```bash
+   python stratified_check.py
+   ```
 ## Pipeline Stages  
 
 The script executes these steps sequentially:  
