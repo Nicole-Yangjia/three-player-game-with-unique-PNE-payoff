@@ -9,54 +9,54 @@ import re
 # =============================================================================
 def generate_combinations():
     l1_options = [
-        "leq(1, x1, y1, z1, X1, Y1, Z1)",
-        "not_leq(1, x1, y1, z1, X1, Y1, Z1)",
-        "leq(1, X1, Y1, Z1, x1, y1, z1)",
-        "not_leq(1, X1, Y1, Z1, x1, y1, z1)"
+        "leq(1, a1, b1, c1, X1, Y1, Z1)",
+        "-leq(1, a1, b1, c1, X1, Y1, Z1)",
+        "leq(1, X1, Y1, Z1, a1, b1, c1)",
+        "-leq(1, X1, Y1, Z1, a1, b1, c1)"
     ]
 
     l2_options = [
-        "leq(2, x1, y1, z1, X2, Y2, Z2)",
-        "leq(2, X2, Y2, Z2, x1, y1, z1)"
+        "leq(2, a1, b1, c1, X2, Y2, Z2)",
+        "leq(2, X2, Y2, Z2, a1, b1, c1)"
     ]
 
     l3_options = [
-        "leq(3, x1, y1, z1, X3, Y3, Z3)",
-        "leq(3, X3, Y3, Z3, x1, y1, z1)"
+        "leq(3, a1, b1, c1, X3, Y3, Z3)",
+        "leq(3, X3, Y3, Z3, a1, b1, c1)"
     ]
 
     l4_options = [
-        "leq(2, x1, y1, z1, X4, Y4, Z4)",
-        "not_leq(2, x1, y1, z1, X4, Y4, Z4)",
-        "leq(2, X4, Y4, Z4, x1, y1, z1)",
-        "not_leq(2, X4, Y4, Z4, x1, y1, z1)"
+        "leq(2, a1, b1, c1, X4, Y4, Z4)",
+        "-leq(2, a1, b1, c1, X4, Y4, Z4)",
+        "leq(2, X4, Y4, Z4, a1, b1, c1)",
+        "-leq(2, X4, Y4, Z4, a1, b1, c1)"
     ]
 
     l5_options = [
-        "leq(1, x1, y1, z1, X5, Y5, Z5)",
-        "leq(1, X5, Y5, Z5, x1, y1, z1)"
+        "leq(1, a1, b1, c1, X5, Y5, Z5)",
+        "leq(1, X5, Y5, Z5, a1, b1, c1)"
     ]
 
     l6_options = [
-        "leq(3, x1, y1, z1, X6, Y6, Z6)",
-        "leq(3, X6, Y6, Z6, x1, y1, z1)"
+        "leq(3, a1, b1, c1, X6, Y6, Z6)",
+        "leq(3, X6, Y6, Z6, a1, b1, c1)"
     ]
 
     l7_options = [
-        "leq(3, x1, y1, z1, X7, Y7, Z7)",
-        "not_leq(3, x1, y1, z1, X7, Y7, Z7)",
-        "leq(3, X7, Y7, Z7, x1, y1, z1)",
-        "not_leq(3, X7, Y7, Z7, x1, y1, z1)"
+        "leq(3, a1, b1, c1, X7, Y7, Z7)",
+        "-leq(3, a1, b1, c1, X7, Y7, Z7)",
+        "leq(3, X7, Y7, Z7, a1, b1, c1)",
+        "-leq(3, X7, Y7, Z7, a1, b1, c1)"
     ]
 
     l8_options = [
-        "leq(1, x1, y1, z1, X8, Y8, Z8)",
-        "leq(1, X8, Y8, Z8, x1, y1, z1)"
+        "leq(1, a1, b1, c1, X8, Y8, Z8)",
+        "leq(1, X8, Y8, Z8, a1, b1, c1)"
     ]
 
     l9_options = [
-        "leq(2, x1, y1, z1, X9, Y9, Z9)",
-        "leq(2, X9, Y9, Z9, x1, y1, z1)"
+        "leq(2, a1, b1, c1, X9, Y9, Z9)",
+        "leq(2, X9, Y9, Z9, a1, b1, c1)"
     ]
 
     total_combinations = (
@@ -94,9 +94,9 @@ def generate_combinations():
 # =============================================================================
 def generate_asp_program_pne(b_rules):
     return f"""
-s1(x1).
-s2(y1).
-s3(z1).
+s1(a1).
+s2(b1).
+s3(c1).
 player(1..3).
 %Sigma G
 leq(I, X, Y, Z, X, Y, Z) :- s1(X), s2(Y), s3(Z), player(I).
@@ -114,12 +114,7 @@ leq(I, X1, Y1, Z1, X3, Y3, Z3) :-
     s1(X3), s2(Y3), s3(Z3),
     player(I).
 
-%classical not and not is failure
-not_leq(I, X, Y, Z, X1, Y1, Z1):- not leq(I, X, Y, Z, X1, Y1, Z1), s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
-:- not_leq(I, X, Y, Z, X1, Y1, Z1), leq(I, X, Y, Z, X1, Y1, Z1), s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
-:- not not_leq(I, X, Y, Z, X1, Y1, Z1), not leq(I, X, Y, Z, X1, Y1, Z1):- s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
-
-%Omega'(x1,y1,z1)
+%Omega'(a1,b1,c1)
 {b_rules}
 
 ne(X,Y,Z) :- 
@@ -128,8 +123,8 @@ ne(X,Y,Z) :-
     leq(3, X, Y, ZE, X, Y, Z),
     s1(XE), s2(YE), s3(ZE), s1(X), s2(Y), s3(Z).
 
-%NE(x1,y1,z1)
-ne(x1,y1,z1).
+%NE'(a1,b1,c1)
+ne(a1,b1,c1).
 """
 
 
@@ -202,7 +197,7 @@ def check_pne_existence():
 # =============================================================================
 def create_symmetric_rules():
     def process_line(line):
-        new_part = line.replace('x1, y1, z1', 'x2, y2, z2')
+        new_part = line.replace('a1, b1, c1', 'a2, b2, c2')
         return line + new_part
 
     with open('havePNE.csv', 'r', newline='') as infile, \
@@ -225,15 +220,15 @@ def create_symmetric_rules():
 def generate_asp_program_unique(b_rules):
     return f"""
 % strategies and players
-s1(x1).
-s1(x2).
-s2(y1).
-s2(y2).
-s3(z1).
-s3(z2).
+s1(a1).
+s1(a2).
+s2(b1).
+s2(b2).
+s3(c1).
+s3(c2).
 player(1..3).
 
-%Sigma G
+%Sigma G'
 leq(I, X, Y, Z, X, Y, Z) :- s1(X), s2(Y), s3(Z), player(I).
 
 :- not leq(I, X1, Y1, Z1, X2, Y2, Z2), not leq(I, X2, Y2, Z2, X1, Y1, Z1),
@@ -246,12 +241,8 @@ leq(I, X1, Y1, Z1, X3, Y3, Z3) :-
     leq(I, X2, Y2, Z2, X3, Y3, Z3),
     player(I).
 
-%classical not and not is failure
-not_leq(I, X, Y, Z, X1, Y1, Z1):- not leq(I, X, Y, Z, X1, Y1, Z1), s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
-:- not_leq(I, X, Y, Z, X1, Y1, Z1), leq(I, X, Y, Z, X1, Y1, Z1), s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
-:- not not_leq(I, X, Y, Z, X1, Y1, Z1), not leq(I, X, Y, Z, X1, Y1, Z1), s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
 
-%Omega'(x1,y1,z1) and Omega'(x2,y2,z2)
+%Omega'(a1,b1,c1) and Omega'(a2,b2,c2)
 {b_rules}
 
 % PNE
@@ -266,10 +257,10 @@ sim(I, X1, Y1, Z1, X2, Y2, Z2) :-
     leq(I, X1, Y1, Z1, X2, Y2, Z2), 
     leq(I, X2, Y2, Z2, X1, Y1, Z1).
 
-% SIM
-ne(x1,y1,z1).
-ne(x2,y2,z2).
-:- sim(1,x1,y1,z1,x2,y2,z2), sim(2,x1,y1,z1,x2,y2,z2), sim(3,x1,y1,z1,x2,y2,z2).
+% SIM'
+ne(a1,b1,c1).
+ne(a2,b2,c2).
+:- sim(1,a1,b1,c1,a2,b2,c2), sim(2,a1,b1,c1,a2,b2,c2), sim(3,a1,b1,c1,a2,b2,c2).
 """
 
 
@@ -450,3 +441,4 @@ if __name__ == "__main__":
 
 
     print("\nProcessing pipeline completed successfully!")
+
