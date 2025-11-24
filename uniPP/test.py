@@ -5,46 +5,46 @@ import clingo
 def generate_random_combination():
     options = {
         'l1': [
-            "leq(1, x1, y1, z1, X1, Y1, Z1)",
-            "not_leq(1, x1, y1, z1, X1, Y1, Z1)",
-            "leq(1, X1, Y1, Z1, x1, y1, z1)",
-            "not_leq(1, X1, Y1, Z1, x1, y1, z1)"
+            "leq(1, a1, b1, c1, X1, Y1, Z1)",
+            "-leq(1, a1, b1, c1, X1, Y1, Z1)",
+            "leq(1, X1, Y1, Z1, a1, b1, c1)",
+            "-leq(1, X1, Y1, Z1, a1, b1, c1)"
         ],
         'l2': [
-            "leq(2, x1, y1, z1, X2, Y2, Z2)",
-            "leq(2, X2, Y2, Z2, x1, y1, z1)"
+            "leq(2, a1, b1, c1, X2, Y2, Z2)",
+            "leq(2, X2, Y2, Z2, a1, b1, c1)"
         ],
         'l3': [
-            "leq(3, x1, y1, z1, X3, Y3, Z3)",
-            "leq(3, X3, Y3, Z3, x1, y1, z1)"
+            "leq(3, a1, b1, c1, X3, Y3, Z3)",
+            "leq(3, X3, Y3, Z3, a1, b1, c1)"
         ],
         'l4': [
-            "leq(2, x1, y1, z1, X4, Y4, Z4)",
-            "not_leq(2, x1, y1, z1, X4, Y4, Z4)",
-            "leq(2, X4, Y4, Z4, x1, y1, z1)",
-            "not_leq(2, X4, Y4, Z4, x1, y1, z1)"
+            "leq(2, a1, b1, c1, X4, Y4, Z4)",
+            "-leq(2, a1, b1, c1, X4, Y4, Z4)",
+            "leq(2, X4, Y4, Z4, a1, b1, c1)",
+            "-leq(2, X4, Y4, Z4, a1, b1, c1)"
         ],
         'l5': [
-            "leq(1, x1, y1, z1, X5, Y5, Z5)",
-            "leq(1, X5, Y5, Z5, x1, y1, z1)"
+            "leq(1, a1, b1, c1, X5, Y5, Z5)",
+            "leq(1, X5, Y5, Z5, a1, b1, c1)"
         ],
         'l6': [
-            "leq(3, x1, y1, z1, X6, Y6, Z6)",
-            "leq(3, X6, Y6, Z6, x1, y1, z1)"
+            "leq(3, a1, b1, c1, X6, Y6, Z6)",
+            "leq(3, X6, Y6, Z6, a1, b1, c1)"
         ],
         'l7': [
-            "leq(3, x1, y1, z1, X7, Y7, Z7)",
-            "not_leq(3, x1, y1, z1, X7, Y7, Z7)",
-            "leq(3, X7, Y7, Z7, x1, y1, z1)",
-            "not_leq(3, X7, Y7, Z7, x1, y1, z1)"
+            "leq(3, a1, b1, c1, X7, Y7, Z7)",
+            "-leq(3, a1, b1, c1, X7, Y7, Z7)",
+            "leq(3, X7, Y7, Z7, a1, b1, c1)",
+            "-leq(3, X7, Y7, Z7, a1, b1, c1)"
         ],
         'l8': [
-            "leq(1, x1, y1, z1, X8, Y8, Z8)",
-            "leq(1, X8, Y8, Z8, x1, y1, z1)"
+            "leq(1, a1, b1, c1, X8, Y8, Z8)",
+            "leq(1, X8, Y8, Z8, a1, b1, c1)"
         ],
         'l9': [
-            "leq(2, x1, y1, z1, X9, Y9, Z9)",
-            "leq(2, X9, Y9, Z9, x1, y1, z1)"
+            "leq(2, a1, b1, c1, X9, Y9, Z9)",
+            "leq(2, X9, Y9, Z9, a1, b1, c1)"
         ]
     }
 
@@ -64,10 +64,10 @@ def generate_random_combination():
     clause6 = f"{l9} :- {l7}, s1(X7), s2(Y7), s3(Z7), s1(X9), s2(Y9), s3(Z9)."
 
     rule1 = clause1 + clause2 + clause3 + clause4 + clause5 + clause6
-    rule2 = rule1.replace('x1, y1, z1', 'x2, y2, z2')
+    rule2 = rule1.replace('a1, b1, c1', 'a2, b2, c2')
 
     def format_rule(atom):
-        return atom.replace('x1, y1, z1', 'x, y, z').replace('x1,y1,z1', 'x,y,z')
+        return atom.replace('a1, b1, c1', 'a, b, c').replace('a1,b1,c1', 'a,b,c')
 
     formatted_rule = (
         f"{format_rule(l1)} -> {format_rule(l2)}, {format_rule(l3)}.\n"
@@ -85,9 +85,9 @@ def generate_random_combination():
 
 def check_step1(rule):
     asp_program = f"""
-s1(x1).
-s2(y1).
-s3(z1).
+s1(a1).
+s2(b1).
+s3(c1).
 player(1..3).
 
 leq(I, X, Y, Z, X, Y, Z) :- s1(X), s2(Y), s3(Z), player(I).
@@ -105,14 +105,6 @@ leq(I, X1, Y1, Z1, X3, Y3, Z3) :-
     s1(X3), s2(Y3), s3(Z3),
     player(I).
 
-not_leq(I, X, Y, Z, X1, Y1, Z1):- not leq(I, X, Y, Z, X1, Y1, Z1), 
-    s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
-
-:- not_leq(I, X, Y, Z, X1, Y1, Z1), leq(I, X, Y, Z, X1, Y1, Z1), 
-    s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
-
-not_leq(I, X, Y, Z, X1, Y1, Z1) | leq(I, X, Y, Z, X1, Y1, Z1):- 
-    s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
 
 {rule}
 
@@ -122,7 +114,7 @@ ne(X,Y,Z) :-
     leq(3, X, Y, ZE, X, Y, Z),
     s1(XE), s2(YE), s3(ZE), s1(X), s2(Y), s3(Z).
 
-ne(x1,y1,z1).
+ne(a1,b1,c1).
 """
     control = clingo.Control()
     control.add("base", [], asp_program)
@@ -137,17 +129,17 @@ ne(x1,y1,z1).
 
 def check_step2(rule):
     asp_program = f"""
-s1(x1).
-s1(x2).
-s2(y1).
-s2(y2).
-s3(z1).
-s3(z2).
+s1(a1).
+s1(a2).
+s2(b1).
+s2(b2).
+s3(c1).
+s3(c2).
 player(1..3).
 
 leq(I, X, Y, Z, X, Y, Z) :- s1(X), s2(Y), s3(Z), player(I).
 
-leq(I, X1, Y1, Z1, X2, Y2, Z2) | leq(I, X2, Y2, Z2, X1, Y1, Z1) :- 
+:- not leq(I, X1, Y1, Z1, X2, Y2, Z2), not leq(I, X2, Y2, Z2, X1, Y1, Z1),
     s1(X1), s2(Y1), s3(Z1), 
     s1(X2), s2(Y2), s3(Z2), 
     player(I).
@@ -156,15 +148,6 @@ leq(I, X1, Y1, Z1, X3, Y3, Z3) :-
     leq(I, X1, Y1, Z1, X2, Y2, Z2), 
     leq(I, X2, Y2, Z2, X3, Y3, Z3),
     player(I).
-
-not_leq(I, X, Y, Z, X1, Y1, Z1):- not leq(I, X, Y, Z, X1, Y1, Z1), 
-    s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
-
-:- not_leq(I, X, Y, Z, X1, Y1, Z1), leq(I, X, Y, Z, X1, Y1, Z1), 
-    s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
-
-not_leq(I, X, Y, Z, X1, Y1, Z1) | leq(I, X, Y, Z, X1, Y1, Z1):- 
-    s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
 
 {rule}
 
@@ -178,12 +161,12 @@ sim(I, X1, Y1, Z1, X2, Y2, Z2) :-
     leq(I, X1, Y1, Z1, X2, Y2, Z2), 
     leq(I, X2, Y2, Z2, X1, Y1, Z1).
 
-ne(x1,y1,z1).
-ne(x2,y2,z2).
+ne(a1,b1,c1).
+ne(a2,b2,c2).
 
-:- sim(1,x1,y1,z1,x2,y2,z2), 
-   sim(2,x1,y1,z1,x2,y2,z2), 
-   sim(3,x1,y1,z1,x2,y2,z2).
+:- sim(1,a1,b1,c1,a2,b2,c2), 
+   sim(2,a1,b1,c1,a2,b2,c2), 
+   sim(3,a1,b1,c1,a2,b2,c2).
 """
     control = clingo.Control()
     control.add("base", [], asp_program)
