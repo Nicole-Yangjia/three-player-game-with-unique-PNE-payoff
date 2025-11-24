@@ -6,9 +6,9 @@ def generate_random_combination():
     options = {
         'l1': [
             "leq(1, a1, b1, c1, X1, Y1, Z1)",
-            "-leq(1, a1, b1, c1, X1, Y1, Z1)",
+            "not_leq(1, a1, b1, c1, X1, Y1, Z1)",
             "leq(1, X1, Y1, Z1, a1, b1, c1)",
-            "-leq(1, X1, Y1, Z1, a1, b1, c1)"
+            "not_leq(1, X1, Y1, Z1, a1, b1, c1)"
         ],
         'l2': [
             "leq(2, a1, b1, c1, X2, Y2, Z2)",
@@ -20,9 +20,9 @@ def generate_random_combination():
         ],
         'l4': [
             "leq(2, a1, b1, c1, X4, Y4, Z4)",
-            "-leq(2, a1, b1, c1, X4, Y4, Z4)",
+            "not_leq(2, a1, b1, c1, X4, Y4, Z4)",
             "leq(2, X4, Y4, Z4, a1, b1, c1)",
-            "-leq(2, X4, Y4, Z4, a1, b1, c1)"
+            "not_leq(2, X4, Y4, Z4, a1, b1, c1)"
         ],
         'l5': [
             "leq(1, a1, b1, c1, X5, Y5, Z5)",
@@ -34,9 +34,9 @@ def generate_random_combination():
         ],
         'l7': [
             "leq(3, a1, b1, c1, X7, Y7, Z7)",
-            "-leq(3, a1, b1, c1, X7, Y7, Z7)",
+            "not_leq(3, a1, b1, c1, X7, Y7, Z7)",
             "leq(3, X7, Y7, Z7, a1, b1, c1)",
-            "-leq(3, X7, Y7, Z7, a1, b1, c1)"
+            "not_leq(3, X7, Y7, Z7, a1, b1, c1)"
         ],
         'l8': [
             "leq(1, a1, b1, c1, X8, Y8, Z8)",
@@ -92,7 +92,7 @@ player(1..3).
 
 leq(I, X, Y, Z, X, Y, Z) :- s1(X), s2(Y), s3(Z), player(I).
 
-leq(I, X1, Y1, Z1, X2, Y2, Z2) | leq(I, X2, Y2, Z2, X1, Y1, Z1) :- 
+:- not leq(I, X1, Y1, Z1, X2, Y2, Z2), not leq(I, X2, Y2, Z2, X1, Y1, Z1),
     s1(X1), s2(Y1), s3(Z1), 
     s1(X2), s2(Y2), s3(Z2), 
     player(I).
@@ -115,6 +115,11 @@ ne(X,Y,Z) :-
     s1(XE), s2(YE), s3(ZE), s1(X), s2(Y), s3(Z).
 
 ne(a1,b1,c1).
+
+%classical not 
+not_leq(I,X,Y,Z,X1,Y1,Z1) :- not leq(I,X,Y,Z,X1,Y1,Z1), s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
+:- not_leq(I,X,Y,Z,X1,Y1,Z1), leq(I,X,Y,Z,X1,Y1,Z1), s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
+:- not not_leq(I,X,Y,Z,X1,Y1,Z1), not leq(I,X,Y,Z,X1,Y1,Z1), s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
 """
     control = clingo.Control()
     control.add("base", [], asp_program)
@@ -167,6 +172,11 @@ ne(a2,b2,c2).
 :- sim(1,a1,b1,c1,a2,b2,c2), 
    sim(2,a1,b1,c1,a2,b2,c2), 
    sim(3,a1,b1,c1,a2,b2,c2).
+
+%classical not 
+not_leq(I,X,Y,Z,X1,Y1,Z1) :- not leq(I,X,Y,Z,X1,Y1,Z1), s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
+:- not_leq(I,X,Y,Z,X1,Y1,Z1), leq(I,X,Y,Z,X1,Y1,Z1), s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
+:- not not_leq(I,X,Y,Z,X1,Y1,Z1), not leq(I,X,Y,Z,X1,Y1,Z1), s1(X), s2(Y), s3(Z), s1(X1), s2(Y1), s3(Z1), player(I).
 """
     control = clingo.Control()
     control.add("base", [], asp_program)
