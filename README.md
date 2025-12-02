@@ -20,18 +20,17 @@ The script executes these steps sequentially:
 
 1. **Check PNE Existence**  
    - *Action*: Filters rules that admit at least one Pure Nash Equilibrium  
-   - *Input*: `generate_combination.csv`  
+   - *Input*: `generate_combination_sat.csv`  
    - *Outputs*:  
      - `havePNE.csv` (rules with ≥1 PNE)  
-     - `noPNE.csv` (rules with no PNE)
 
 
 2. **Verify Unique PNE Payoffs**  
    - *Action*: Identifies rules with unique PNE in symmetric games  
-   - *Input*: `sy_generate_combination.csv`  
+   - *Input*: `havePNE.csv`  
    - *Outputs*:  
-     - `unique_PNE_payoff.csv` (rules with exactly one PNE)  
-     - `no_unique_PNE_payoff.csv` (rules with multiple/non-unique PNE)
+     - `uniqueUNE.csv` (rules with exactly unique PNEs payoff)  
+     - `failUNE.csv` (rules with multiple/non-unique PNEs payoff)
 
    
 ## Testing Specific Conditions
