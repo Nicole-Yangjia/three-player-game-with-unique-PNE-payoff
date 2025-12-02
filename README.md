@@ -25,12 +25,12 @@ The script executes these steps sequentially:
      - `havePNE.csv` (rules with ≥1 PNE)  
 
 
-2. **Verify Unique PNE Payoffs**  
+2. **Verify Unique PNE Payoff**  
    - *Action*: Identifies rules with unique PNE in symmetric games  
    - *Input*: `havePNE.csv`  
    - *Outputs*:  
-     - `uniqueUNE.csv` (rules with exactly unique PNEs payoff)  
-     - `failUNE.csv` (rules with multiple/non-unique PNEs payoff)
+     - `uniqueUNE.csv` (rules with exactly unique PNE payoff)  
+     - `failUNE.csv` (rules with multiple/non-unique PNE payoff)
 
    
 ## Testing Specific Conditions
